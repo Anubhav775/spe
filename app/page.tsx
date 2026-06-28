@@ -1,65 +1,76 @@
-import Image from "next/image";
+import ImageSlider from "@/components/ImageSlider";
+import HowItWorks from "@/components/HowItWorks";
+import OurRangeOfProducts from "@/components/OurRangeOfProducts";
+import WhyShaheenPlus from "@/components/WhyShaheenPlus";
+import PremiumProducts from "@/components/PremiumProducts";
+import GallerySection from "@/components/GallerySection";
+import FAQSection from "@/components/FAQSection";
+import ClientsSection from "@/components/ClientsSection";
+import QuerySection from "@/components/QuerySection";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div 
+      className="flex flex-col flex-1 w-full bg-cover bg-left md:bg-center bg-fixed"
+      style={{ backgroundImage: "url('https://res.cloudinary.com/dxmfeilzl/image/upload/v1782475522/pexels-artbovich-6758771_id0hsu.jpg')" }}
+    >
+      {/* Hero Section (White Section) */}
+      <section className="flex flex-col w-full bg-white pt-[5px] px-[5px]">
+        <div className="flex flex-col lg:flex-row w-full h-auto lg:h-[calc(100vh-64px)] gap-[5px]">
+          {/* Top/Left Side: Image Slider */}
+          <div className="w-full lg:w-2/3 aspect-[16/9] sm:aspect-[21/9] lg:aspect-auto lg:h-full relative">
+            <ImageSlider />
+          </div>
+
+          {/* Bottom/Right Side: Video Section */}
+          <div className="w-full lg:w-1/3 aspect-[16/9] sm:aspect-[21/9] lg:aspect-auto lg:h-full flex flex-row lg:flex-col bg-gray-100 rounded-b-md lg:rounded-bl-none lg:rounded-br-md">
+            <div className="relative flex-1 bg-black overflow-hidden">
+              <video 
+                src="https://res.cloudinary.com/dxmfeilzl/video/upload/v1782475846/VN20260331_160123_fnlc4q.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+            <div className="py-2 px-3 lg:py-4 lg:px-2 flex items-center justify-center shadow-[0_-4px_10px_rgba(0,0,0,0.02)] z-10 bg-gray-100">
+              <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-bold text-gray-800 uppercase tracking-widest" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)' }}>
+                <span className="lg:hidden">Our Delivered Product</span>
+              </h3>
+              <h3 className="hidden lg:block text-xs sm:text-sm md:text-base lg:text-lg font-bold text-gray-800 uppercase tracking-widest text-center">
+                Our Delivered Product
+              </h3>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Premium Products Marquee */}
+        <div className="mt-8 lg:mt-12">
+          <PremiumProducts />
         </div>
-      </main>
+      </section>
+
+      {/* How It Works Section */}
+      <HowItWorks />
+
+      {/* Our Range Of Products */}
+      <OurRangeOfProducts />
+
+      {/* Why Shaheen Plus Section */}
+      <WhyShaheenPlus />
+
+      {/* Gallery Section */}
+      <GallerySection />
+
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Clients and Social Media Section */}
+      <ClientsSection />
+
+      {/* Send Query Section */}
+      <QuerySection />
     </div>
   );
 }
