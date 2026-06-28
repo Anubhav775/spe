@@ -1,7 +1,8 @@
 "use client";
 
-import { X, Clock, UserCheck, Settings, Shield, Mail, Phone, MessageCircle, Send } from "lucide-react";
+import { X, Clock, UserCheck, Settings, Shield, Mail, Phone, MessageCircle, Send, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -9,6 +10,41 @@ interface EnquiryModalProps {
 }
 
 export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    projectType: "",
+    subject: "",
+    message: ""
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ source: "Enquiry Modal", ...formData }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      setStatus("error");
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -132,79 +168,101 @@ export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
             </div>
           </div>
 
-          <form className="flex flex-col gap-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-700">Full Name</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <UserCheck size={16} className="text-gray-400" />
-                  </div>
-                  <input type="text" placeholder="Enter your full name" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
-                </div>
+          {status === "success" ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center h-full">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle2 size={32} className="text-green-600" />
               </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-700">Email Address</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <Mail size={16} className="text-gray-400" />
-                  </div>
-                  <input type="email" placeholder="Enter your email" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Request Submitted!</h3>
+              <p className="text-gray-600 text-sm max-w-xs">
+                You have enquired successfully. Our team will respond to it quickly.
+              </p>
+              <button 
+                onClick={onClose}
+                className="mt-8 px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors text-sm"
+              >
+                Close Window
+              </button>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-700">Phone Number</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <Phone size={16} className="text-gray-400" />
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Full Name</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <UserCheck size={16} className="text-gray-400" />
+                    </div>
+                    <input required name="fullName" value={formData.fullName} onChange={handleChange} type="text" placeholder="Enter your full name" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
                   </div>
-                  <input type="tel" placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
                 </div>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-700">Project Type</label>
-                <div className="relative">
-                  <select className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all appearance-none text-gray-600">
-                    <option value="">Select project type</option>
-                    <option value="residential">Residential Elevator</option>
-                    <option value="commercial">Commercial Elevator</option>
-                    <option value="hospital">Hospital Elevator</option>
-                    <option value="other">Other / Not Sure</option>
-                  </select>
-                  <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L5 5L9 1" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Email Address</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <Mail size={16} className="text-gray-400" />
+                    </div>
+                    <input name="email" value={formData.email} onChange={handleChange} type="email" placeholder="Enter your email" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-700">Subject</label>
-              <div className="relative">
-                <input type="text" placeholder="Enter subject" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Phone Number</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <Phone size={16} className="text-gray-400" />
+                    </div>
+                    <input required name="phone" value={formData.phone} onChange={handleChange} type="tel" placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-gray-700">Project Type</label>
+                  <div className="relative">
+                    <select name="projectType" value={formData.projectType} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all appearance-none text-gray-600">
+                      <option value="">Select project type</option>
+                      <option value="residential">Residential Elevator</option>
+                      <option value="commercial">Commercial Elevator</option>
+                      <option value="hospital">Hospital Elevator</option>
+                      <option value="other">Other / Not Sure</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L5 5L9 1" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-700">Message</label>
-              <textarea rows={4} placeholder="Tell us about your project..." className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all resize-none"></textarea>
-            </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-gray-700">Subject</label>
+                <div className="relative">
+                  <input name="subject" value={formData.subject} onChange={handleChange} type="text" placeholder="Enter subject" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all" />
+                </div>
+              </div>
 
-            <button type="button" className="w-full bg-[#10958C] hover:bg-[#0D7F77] text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors mt-2 shadow-md hover:shadow-lg">
-              <Send size={18} />
-              SUBMIT ENQUIRY
-            </button>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold text-gray-700">Message</label>
+                <textarea required name="message" value={formData.message} onChange={handleChange} rows={4} placeholder="Tell us about your project..." className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all resize-none"></textarea>
+              </div>
 
-            <div className="flex items-center justify-center gap-2 mt-2">
-              <Shield size={14} className="text-gray-400" />
-              <p className="text-[11px] text-gray-500">Your information is safe with us. We respect your privacy.</p>
-            </div>
-          </form>
+              {status === "error" && (
+                <p className="text-red-500 text-xs text-center font-medium">Failed to submit. Please try again.</p>
+              )}
+
+              <button disabled={status === "loading"} type="submit" className="w-full bg-[#10958C] hover:bg-[#0D7F77] disabled:opacity-70 text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors mt-2 shadow-md hover:shadow-lg">
+                <Send size={18} className={status === "loading" ? "animate-pulse" : ""} />
+                {status === "loading" ? "SUBMITTING..." : "SUBMIT ENQUIRY"}
+              </button>
+
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <Shield size={14} className="text-gray-400" />
+                <p className="text-[11px] text-gray-500">Your information is safe with us. We respect your privacy.</p>
+              </div>
+            </form>
+          )}
 
         </div>
       </div>
