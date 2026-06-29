@@ -222,10 +222,14 @@ export default function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                   <div className="relative">
                     <select name="projectType" value={formData.projectType} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#10958C]/20 focus:border-[#10958C] transition-all appearance-none text-gray-600">
                       <option value="">Select project type</option>
-                      <option value="residential">Residential Elevator</option>
-                      <option value="commercial">Commercial Elevator</option>
-                      <option value="hospital">Hospital Elevator</option>
-                      <option value="other">Other / Not Sure</option>
+                      <option value="Residential Elevator">Residential Elevator</option>
+                      <option value="Commercial Elevator">Commercial Elevator</option>
+                      <option value="Hospital Elevator">Hospital Elevator</option>
+                      <option value="Lift Maintenance">Lift Maintenance</option>
+                      <option value="Report a lift issue">Report a lift issue</option>
+                      <option value="Annual Maintenance Contract (AMC)">Annual Maintenance Contract (AMC)</option>
+                      <option value="Modification of Old Lift">Modification of Old Lift</option>
+                      <option value="Other / Not Sure">Other / Not Sure</option>
                     </select>
                     <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                       <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">

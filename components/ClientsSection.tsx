@@ -1,12 +1,15 @@
 import Image from "next/image";
 
 const clients = [
+  { name: "Sana Handlooms", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782640011/Screenshot_20260628-140046_ov8yfm.png" },
   { name: "The Great Palace", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623756/logo_ozslot.jpg" },
   { name: "SS Builder", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623665/images_rcxvzy.jpg" },
   { name: "I Saw Industries", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623654/1773248812716_fvm2be.png" },
+  { name: "Sana Handlooms", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782640011/Screenshot_20260628-140046_ov8yfm.png" },
   { name: "The Great Palace", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623756/logo_ozslot.jpg" },
   { name: "SS Builder", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623665/images_rcxvzy.jpg" },
   { name: "I Saw Industries", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623654/1773248812716_fvm2be.png" },
+  { name: "Sana Handlooms", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782640011/Screenshot_20260628-140046_ov8yfm.png" },
   { name: "The Great Palace", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623756/logo_ozslot.jpg" },
   { name: "SS Builder", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623665/images_rcxvzy.jpg" },
   { name: "I Saw Industries", logo: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782623654/1773248812716_fvm2be.png" }

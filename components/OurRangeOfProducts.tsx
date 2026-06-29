@@ -1,5 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { Maximize, Settings, DoorOpen, LayoutGrid } from "lucide-react";
+import { useState } from "react";
+import CabinModal from "./CabinModal";
+import CopsVopsModal from "./CopsVopsModal";
 
 const products = [
   {
@@ -13,7 +18,7 @@ const products = [
     title: "GEAR /",
     subtitle: "GEARLESS MOTOR",
     desc: "High efficiency, energy-saving motors for smooth, reliable and quiet performance.",
-    image: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782549965/geargearless_motor_2_wmgp4o.png",
+    image: "https://res.cloudinary.com/dxmfeilzl/image/upload/v1782695874/ChatGPT_Image_Jun_29_2026_06_47_15_AM_scxfdn.png",
     icon: <Settings size={24} className="text-white" />
   },
   {
@@ -34,6 +39,9 @@ const products = [
 
 
 export default function OurRangeOfProducts() {
+  const [isCabinModalOpen, setIsCabinModalOpen] = useState(false);
+  const [isCopsVopsModalOpen, setIsCopsVopsModalOpen] = useState(false);
+
   return (
     <section className="w-full bg-transparent py-20 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
@@ -45,11 +53,19 @@ export default function OurRangeOfProducts() {
 
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 w-full">
-          {products.map((product, idx) => (
-            <div 
-              key={idx}
-              className="bg-[var(--color-primary-light)] rounded-xl border border-[var(--color-primary-light)] p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center relative pt-4 pb-8"
-            >
+          {products.map((product, idx) => {
+            const isCabinCard = product.title === "30+";
+            const isCopsVopsCard = product.title.includes("VARIETY");
+            const isClickable = isCabinCard || isCopsVopsCard;
+            return (
+              <div 
+                key={idx}
+                onClick={() => {
+                  if (isCabinCard) setIsCabinModalOpen(true);
+                  if (isCopsVopsCard) setIsCopsVopsModalOpen(true);
+                }}
+                className={`bg-[var(--color-primary-light)] rounded-xl border border-[var(--color-primary-light)] p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center relative pt-4 pb-8 ${isClickable ? 'cursor-pointer hover:scale-[1.02] transition-transform' : ''}`}
+              >
               <div className="w-full aspect-[4/5] relative rounded-lg overflow-hidden mb-4">
                 <Image
                   src={product.image}
@@ -72,8 +88,19 @@ export default function OurRangeOfProducts() {
                 </p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
+
+        <CabinModal 
+          isOpen={isCabinModalOpen}
+          onClose={() => setIsCabinModalOpen(false)}
+        />
+
+        <CopsVopsModal 
+          isOpen={isCopsVopsModalOpen}
+          onClose={() => setIsCopsVopsModalOpen(false)}
+        />
 
 
       </div>

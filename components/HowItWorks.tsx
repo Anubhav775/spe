@@ -64,7 +64,7 @@ const stats = [
   },
   {
     icon: Users,
-    number: "500+",
+    number: "900+",
     text: "Happy Customers"
   },
   {

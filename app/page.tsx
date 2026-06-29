@@ -7,6 +7,7 @@ import GallerySection from "@/components/GallerySection";
 import FAQSection from "@/components/FAQSection";
 import ClientsSection from "@/components/ClientsSection";
 import QuerySection from "@/components/QuerySection";
+import OurServices from "@/components/OurServices";
 
 export default function Home() {
   return (
@@ -54,11 +55,14 @@ export default function Home() {
       {/* How It Works Section */}
       <HowItWorks />
 
+      {/* Why Shaheen Plus Section */}
+      <WhyShaheenPlus />
+
       {/* Our Range Of Products */}
       <OurRangeOfProducts />
 
-      {/* Why Shaheen Plus Section */}
-      <WhyShaheenPlus />
+      {/* Our Services Section */}
+      <OurServices />
 
       {/* Gallery Section */}
       <GallerySection />

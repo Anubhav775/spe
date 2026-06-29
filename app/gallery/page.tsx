@@ -49,6 +49,7 @@ export default function GalleryPage() {
                       loop
                       muted
                       playsInline
+                      controls
                       className="w-full h-auto block group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (

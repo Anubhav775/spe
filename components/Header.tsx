@@ -54,6 +54,9 @@ export default function Header() {
         <Link href="/#products" className="hover:text-black/70 transition-colors">
           Product
         </Link>
+        <Link href="/#services" className="hover:text-black/70 transition-colors">
+          Our Services
+        </Link>
         <Link href="/#about" className="hover:text-black/70 transition-colors">
           About Us
         </Link>
@@ -129,6 +132,7 @@ export default function Header() {
           <nav className="flex flex-col gap-4 font-medium text-gray-700">
             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#10958C]">Home</Link>
             <Link href="/#products" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#10958C]">Product</Link>
+            <Link href="/#services" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#10958C]">Our Services</Link>
             <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#10958C]">About Us</Link>
             <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#10958C]">Gallery</Link>
             <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#10958C]">Contact Us</Link>
