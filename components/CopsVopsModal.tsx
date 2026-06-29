@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import { X } from "lucide-react";
 
 interface CopsVopsModalProps {
@@ -33,16 +34,12 @@ export default function CopsVopsModal({ isOpen, onClose }: CopsVopsModalProps) {
         </div>
 
         {/* Image Content */}
-        <div className="relative w-full h-[60vh] md:h-[70vh] bg-gray-50 p-4 md:p-8 flex-1">
-          <div className="relative w-full h-full">
-            <Image
-              src="https://res.cloudinary.com/dxmfeilzl/image/upload/v1782696445/Screenshot_20260628-222612_o6vjue.png"
-              alt="Variety of Cops & Vops"
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 1200px"
-            />
-          </div>
+        <div className="relative w-full h-[60vh] md:h-[70vh] bg-gray-50 p-4 md:p-8 flex-1 flex items-center justify-center overflow-y-auto overflow-x-hidden">
+          <img
+            src="https://res.cloudinary.com/dxmfeilzl/image/upload/v1782696445/Screenshot_20260628-222612_o6vjue.png"
+            alt="Variety of Cops & Vops"
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
     </div>
